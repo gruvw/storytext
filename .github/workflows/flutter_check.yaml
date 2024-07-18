@@ -1,0 +1,33 @@
+name: Flutter Application Check CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  flutter-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Flutter dependencies
+        run: |
+          flutter config --no-analytics --no-cli-animations
+          flutter --version
+          flutter pub get
+
+      - name: Check code formatting
+        run: |
+          dart format --output=none --set-exit-if-changed .
+
+      - name: Check for code errors
+        run: |
+          flutter analyze
