@@ -17,7 +17,7 @@ personas:
   next: "2"
 "2":
   persona: "2"
-  text: I have a question
+  text: I have a **question**
   mcq:
     - answer: Answer 1
       next: "3"
