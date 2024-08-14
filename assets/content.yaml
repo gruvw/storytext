@@ -1,0 +1,32 @@
+---
+# Setup
+title: StoryText
+personas:
+  "1":
+    name: John
+    age: 26
+  "2":
+    name: Lucy
+    age: 18
+---
+# Story
+"1":
+  persona: "1"
+  text: Hello <https://youtu.be/TBikbn5XJhg>!
+  picture: picture_name
+  next: "2"
+"2":
+  persona: "2"
+  text: I have a question
+  mcq:
+    - answer: Answer 1
+      next: "3"
+    - answer: Answer 2
+      next: "4"
+"3":
+  persona: "2"
+  text: Good choice
+  next: "4"
+"4":
+  persona: "1"
+  text: Thank you
