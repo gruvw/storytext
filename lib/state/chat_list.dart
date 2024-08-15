@@ -5,6 +5,8 @@ import "package:storytext/static/keys.dart";
 import "package:storytext/static/msg_delay.dart";
 import "package:yaml/yaml.dart";
 
+/// Observable, range resettable, cached, multi-parent,
+/// path persisted, linked list data structure
 class ChatList with ChangeNotifier {
   final YamlMap setupDoc;
   final YamlMap storyDoc;
@@ -69,13 +71,21 @@ class ChatList with ChangeNotifier {
     }
   }
 
-  Future<void> scheduleMsg(MessageId id) async {
-    final nextMessage = Message.fromDocument(storyDoc, id);
-    final nextText = nextMessage.text;
+  Duration _delayMsg(MessageId id) {
+    final message = Message.fromDocument(storyDoc, id);
+    final text = message.text;
+    return text != null ? delayFromText(text) : pictureDelay;
+  }
 
+  Future<void> scheduleMsg(MessageId id) async {
     // TODO if already discovered don't wait ?
-    final delay = nextText != null ? delayFromText(nextText) : pictureDelay;
-    await Future.delayed(delay);
+
+    // time for receiving persona to read
+    await Future.delayed(_delayMsg(head));
+
+    // time for replying persona to write
+    // TODO apply typing indicator for replying persona
+    await Future.delayed(_delayMsg(id));
 
     write(id);
   }
