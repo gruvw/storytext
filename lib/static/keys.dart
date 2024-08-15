@@ -14,3 +14,7 @@ class YamlKeys {
   static const mcqAnswer = "answer";
   static const mcqNext = "next";
 }
+
+class SharedPreferencesKeys {
+  static const head = "head";
+}

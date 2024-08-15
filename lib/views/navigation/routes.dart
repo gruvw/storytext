@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:storytext/views/routes/overview.dart";
+import "package:storytext/views/routes/chat.dart";
 
 enum Routes {
   chat("chat");

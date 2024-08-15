@@ -11,7 +11,7 @@ class Application extends StatelessWidget {
       child: MaterialApp(
         title: "StoryText",
         onGenerateRoute: generateRoute,
-        initialRoute: Routes.overview.name,
+        initialRoute: Routes.chat.name,
       ),
     );
   }
