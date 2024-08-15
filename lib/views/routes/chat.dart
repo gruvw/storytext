@@ -4,8 +4,8 @@ import "package:storytext/models/message.dart";
 import "package:storytext/views/components/story_loader.dart";
 import "package:url_launcher/url_launcher.dart";
 
-class OverviewPage extends StatelessWidget {
-  const OverviewPage({super.key});
+class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {

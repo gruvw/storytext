@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:storytext/views/routes/overview.dart";
 
 enum Routes {
-  overview("overview");
+  chat("chat");
 
   final String name;
 
@@ -14,13 +14,13 @@ enum Routes {
 
   Widget page(Object? args) {
     switch (this) {
-      case overview:
-        return const OverviewPage();
+      case chat:
+        return const ChatPage();
     }
   }
 }
 
 Route generateRoute(RouteSettings settings) {
-  final route = Routes.parse(settings.name ?? Routes.overview.name);
+  final route = Routes.parse(settings.name ?? Routes.chat.name);
   return MaterialPageRoute(builder: (_) => route.page(settings.arguments));
 }
