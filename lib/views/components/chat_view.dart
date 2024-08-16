@@ -1,9 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_hooks/flutter_hooks.dart";
-import "package:flutter_markdown/flutter_markdown.dart";
-import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
-import "package:url_launcher/url_launcher.dart";
 
 T useListenableState<T extends ChangeNotifier>(T data) {
   final state = useState<T>(data);
@@ -31,7 +28,6 @@ class ChatView extends HookWidget {
     // );
     return ListView.builder(
       reverse: true,
-      // itemCount: 3,
       itemBuilder: (context, index) {
         final msgId = chat.getMessageIdAt(index);
 
