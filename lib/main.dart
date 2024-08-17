@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:storytext/views/app.dart";
+import "package:storytext/views/application.dart";
 
 void main() {
   runApp(const Application());

@@ -18,6 +18,7 @@ class McqUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO mcq UI
+    // TODO display chosen answer and already discoverd paths, color coding buttons
     return Column(
       children: [
         for (final choice in mcq)

@@ -40,6 +40,7 @@ class MessageUi extends StatelessWidget {
         : null;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PersonaUI(
           chatList: chatList,

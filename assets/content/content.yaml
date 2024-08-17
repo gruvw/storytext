@@ -5,11 +5,13 @@ personas:
   "1":
     name: John
     age: 26
-    picture: persona_john
+    description: scientist and philosopher
+    picture: john.png
   "2":
     name: Lucy
     age: 18
-    picture: persona_lucy
+    description: punk archeology
+    picture: lucy.png
 ---
 # Story
 "1":
@@ -32,6 +34,7 @@ personas:
 "4":
   persona: "1"
   picture: picture_name_2
+  reply: "3"
   next: "5"
 "5":
   persona: "1"

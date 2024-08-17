@@ -1,9 +1,10 @@
-class YamlKeys {
+abstract class YamlKeys {
   static const title = "title";
 
   static const personas = "personas";
   static const personaName = "name";
   static const personaAge = "age";
+  static const personaPicture = "picture";
 
   static const msgPersona = "persona";
   static const msgText = "text";
@@ -15,6 +16,6 @@ class YamlKeys {
   static const mcqNext = "next";
 }
 
-class SharedPreferencesKeys {
+abstract class SharedPreferencesKeys {
   static const head = "head";
 }

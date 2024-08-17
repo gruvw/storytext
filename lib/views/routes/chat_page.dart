@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:storytext/static/values.dart";
 import "package:storytext/views/components/chat_view.dart";
 import "package:storytext/views/components/content_loader.dart";
 
@@ -9,7 +10,7 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("StoryText"),
+        title: const Text(Values.applicationTitle),
       ),
       body: Center(
         child: ContentLoader(
