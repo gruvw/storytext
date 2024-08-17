@@ -4,7 +4,7 @@ import "package:storytext/state/chat_list.dart";
 import "package:yaml/yaml.dart";
 
 class StoryLoader extends StatelessWidget {
-  static const _storyLocation = "assets/content.yaml";
+  static const _storyLocation = "assets/content/content.yaml";
 
   final Function(BuildContext context, ChatList chatList) builder;
 

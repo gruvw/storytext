@@ -66,6 +66,7 @@ class ChatList with ChangeNotifier {
   Future<void> _scheduleNext() async {
     final message = Message.fromDocument(storyDoc, head);
     final nextId = message.next;
+
     if (nextId != null) {
       await scheduleMsg(nextId);
     }
@@ -77,11 +78,16 @@ class ChatList with ChangeNotifier {
     return text != null ? delayFromText(text) : pictureDelay;
   }
 
-  Future<void> scheduleMsg(MessageId id) async {
+  Future<void> scheduleMsg(
+    MessageId id, {
+    bool readWait = true,
+  }) async {
     // TODO if already discovered don't wait ?
 
     // time for receiving persona to read
-    await Future.delayed(_delayMsg(head));
+    if (readWait) {
+      await Future.delayed(_delayMsg(head));
+    }
 
     // time for replying persona to write
     // TODO apply typing indicator for replying persona

@@ -5,15 +5,17 @@ personas:
   "1":
     name: John
     age: 26
+    picture: persona_john
   "2":
     name: Lucy
     age: 18
+    picture: persona_lucy
 ---
 # Story
 "1":
   persona: "1"
   text: Hello <https://youtu.be/TBikbn5XJhg>!
-  picture: picture_name
+  picture: picture_name_1
   next: "2"
 "2":
   persona: "2"
@@ -28,5 +30,9 @@ personas:
   text: Good choice
   next: "4"
 "4":
+  persona: "1"
+  picture: picture_name_2
+  next: "5"
+"5":
   persona: "1"
   text: Thank you

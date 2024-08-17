@@ -1,11 +1,21 @@
 import "package:flutter/material.dart";
+import "package:storytext/models/persona.dart";
+import "package:storytext/state/chat_list.dart";
 
 class PersonaUI extends StatelessWidget {
-  const PersonaUI({super.key});
+  final ChatList chatList;
+  final PersonaId personaId;
+
+  const PersonaUI({
+    super.key,
+    required this.chatList,
+    required this.personaId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // TODO persona widget
-    return const Text("Persona");
+    final persona = Persona.fromDocument(chatList.setupDoc, personaId);
+    // TODO persona widget with profile picture
+    return Text(persona.name);
   }
 }
