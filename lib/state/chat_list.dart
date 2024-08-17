@@ -88,12 +88,15 @@ class ChatList with ChangeNotifier {
 
   Future<void> _scheduleNext() async {
     final message = Message.fromDocument(storyDoc, head);
-    final nextId = message.next;
+
+    // last interaction requiring scheduling
+    // was either an MCQ answer or next message
+    final mcqPath = getChosenPath(head);
+    final nextId = mcqPath ?? message.next;
 
     if (nextId != null) {
       await scheduleMsg(nextId);
     }
-    // TODO handle mcq case
   }
 
   Duration _messageDuration(String? messageText) {
