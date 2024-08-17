@@ -22,3 +22,7 @@ class Choice {
     return mcq?.map((choice) => Choice.fromMap(choice)).toList();
   }
 }
+
+extension FindChoice on List<Choice> {
+  Choice withNext(MessageId next) => where((c) => c.next == next).first;
+}

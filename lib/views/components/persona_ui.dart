@@ -17,11 +17,13 @@ class PersonaUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final persona = Persona.fromDocument(chatList.setupDoc, personaId);
+    final imagePath = _personasAssetsPath + persona.picture;
+
     // TODO persona UI
     return Row(
       children: [
         CircleAvatar(
-          foregroundImage: AssetImage(_personasAssetsPath + persona.picture),
+          foregroundImage: AssetImage(imagePath),
           child: Text(persona.name[0]),
         ),
         Text(persona.name),
