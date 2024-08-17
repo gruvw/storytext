@@ -2,8 +2,8 @@ import "package:flutter/material.dart";
 import "package:flutter_markdown/flutter_markdown.dart";
 import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
-import "package:storytext/views/components/mcq.dart";
-import "package:storytext/views/components/persona.dart";
+import "package:storytext/views/components/mcq_ui.dart";
+import "package:storytext/views/components/persona_ui.dart";
 import "package:url_launcher/url_launcher.dart";
 
 class MessageUi extends StatelessWidget {
