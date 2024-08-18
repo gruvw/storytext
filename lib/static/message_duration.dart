@@ -1,6 +1,6 @@
 import "dart:math";
 
-const pictureDelay = Duration(seconds: 1);
+const imageDelay = Duration(seconds: 1);
 
 double logBase(num x, num base) => log(x) / log(base);
 double log10(num x) => logBase(x, 10);

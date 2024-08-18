@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:storytext/models/persona.dart";
 import "package:storytext/state/chat_list.dart";
+import "package:storytext/views/components/persona_avatar.dart";
 
 class PersonaUI extends StatelessWidget {
-  static const _personasAssetsPath = "images/personas/";
-
   final ChatList chatList;
   final PersonaId personaId;
 
@@ -17,15 +16,11 @@ class PersonaUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final persona = Persona.fromDocument(chatList.setupDoc, personaId);
-    final imagePath = _personasAssetsPath + persona.picture;
 
     // TODO persona UI
     return Row(
       children: [
-        CircleAvatar(
-          foregroundImage: AssetImage(imagePath),
-          child: Text(persona.name[0]),
-        ),
+        PersonaAvatar(persona: persona),
         Text(persona.name),
       ],
     );

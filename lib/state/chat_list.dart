@@ -2,8 +2,10 @@ import "package:flutter/foundation.dart";
 import "package:shared_preferences/shared_preferences.dart";
 import "package:storytext/models/choice.dart";
 import "package:storytext/models/message.dart";
+import "package:storytext/models/persona.dart";
 import "package:storytext/static/keys.dart";
 import "package:storytext/static/message_duration.dart";
+import "package:storytext/utils/dart.dart";
 import "package:yaml/yaml.dart";
 
 /// Observable, range resettable, cached, multi-parent,
@@ -13,6 +15,8 @@ class ChatList with ChangeNotifier {
 
   final YamlMap setupDoc;
   final YamlMap storyDoc;
+
+  Persona? typingPersona;
 
   // persistent storage
   final SharedPreferences _sp;
@@ -25,7 +29,8 @@ class ChatList with ChangeNotifier {
     required this.storyDoc,
     required SharedPreferences sp,
   })  : _sp = sp,
-        _messageIds = [];
+        _messageIds = [],
+        typingPersona = null;
 
   static Future<ChatList> create({
     required YamlMap setupDoc,
@@ -52,6 +57,9 @@ class ChatList with ChangeNotifier {
   MessageId get head => _messageIds.first;
 
   MessageId? getMessageIdAt(int index) {
+    // index 0 used for typing indicator
+    --index;
+
     var currentIndex = _messageIds.length - 1;
     while (index > currentIndex) {
       final current = _messageIds[currentIndex];
@@ -92,15 +100,23 @@ class ChatList with ChangeNotifier {
     // last interaction requiring scheduling
     // was either an MCQ answer or next message
     final mcqPath = getChosenPath(head);
-    final nextId = mcqPath ?? message.next;
+    final scheduleMessageId = mcqPath ?? message.next;
 
-    if (nextId != null) {
-      await scheduleMsg(nextId);
+    if (scheduleMessageId != null) {
+      await scheduleMsg(scheduleMessageId);
     }
   }
 
-  Duration _messageDuration(String? messageText) {
-    return messageText != null ? durationFromText(messageText) : pictureDelay;
+  Duration _messageDuration({
+    required String? messageText,
+    required bool hasImage,
+  }) {
+    final textDelay = messageText.nMap(
+          (t) => durationFromText(t),
+        ) ??
+        Duration.zero;
+    final imgDelay = hasImage ? imageDelay : Duration.zero;
+    return textDelay + imgDelay;
   }
 
   Future<void> scheduleMsg(MessageId id) async {
@@ -114,14 +130,31 @@ class ChatList with ChangeNotifier {
     final readMessage = mcqPath == null
         ? headMessage.text
         : headMessage.mcq!.withNext(mcqPath).answer;
-    await Future.delayed(_messageDuration(readMessage));
+    await Future.delayed(
+      _messageDuration(
+        messageText: readMessage,
+        hasImage: mcqPath == null && headMessage.image != null,
+      ),
+    );
+
+    final writeMessage = Message.fromDocument(storyDoc, id);
+
+    // apply typing indicator for replying persona
+    typingPersona = Persona.fromDocument(
+      setupDoc,
+      writeMessage.personaId,
+    );
+    notifyListeners();
 
     // time for replying persona to write
-    // TODO apply typing indicator for replying persona
-    final writeMessage = Message.fromDocument(storyDoc, id);
-    await Future.delayed(_messageDuration(writeMessage.text));
+    await Future.delayed(
+      _messageDuration(
+        messageText: writeMessage.text,
+        hasImage: writeMessage.image != null,
+      ),
+    );
 
-    write(id);
+    await write(id);
   }
 
   Future<void> clearFrom(int index) async {
@@ -141,8 +174,10 @@ class ChatList with ChangeNotifier {
     _messageIds.insert(0, messageId);
 
     await _persistHead();
+    typingPersona = null;
+
     notifyListeners();
 
-    _scheduleNext();
+    await _scheduleNext();
   }
 }
