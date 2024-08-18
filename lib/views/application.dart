@@ -10,6 +10,7 @@ class Application extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: "StoryText",
+        theme: ThemeData(fontFamily: "Noto"),
         onGenerateRoute: generateRoute,
         initialRoute: Routes.chat.name,
       ),

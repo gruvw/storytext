@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:storytext/utils/dart.dart";
 import "package:storytext/views/components/markdown_content.dart";
+import "package:widget_zoom/widget_zoom.dart";
 
 class ImageUi extends StatelessWidget {
   static const _sourcePrefix = "Source: ";
@@ -25,7 +26,10 @@ class ImageUi extends StatelessWidget {
         maxWidth: 350,
         maxHeight: 150,
       ),
-      child: Image.asset(path),
+      child: WidgetZoom(
+        heroAnimationTag: path,
+        zoomWidget: Image.asset(path),
+      ),
     );
 
     return Padding(

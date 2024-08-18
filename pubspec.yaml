@@ -15,6 +15,7 @@ dependencies:
   hooks_riverpod: ^2.5.1
   shared_preferences: ^2.3.1
   url_launcher: ^6.3.0
+  widget_zoom: ^0.0.4
   yaml: ^3.1.2
 
 dev_dependencies:
@@ -26,6 +27,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Noto
+      fonts:
+        - asset: assets/fonts/noto/NotoSans-VariableFont_wdth,wght.ttf
+        - asset: assets/fonts/noto/NotoSans-Italic-VariableFont_wdth,wght.ttf
+          style: italic
 
   assets:
     - assets/content/
