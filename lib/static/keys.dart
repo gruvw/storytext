@@ -8,7 +8,8 @@ abstract class YamlKeys {
 
   static const msgPersona = "persona";
   static const msgText = "text";
-  static const msgPicture = "picture";
+  static const msgImage = "image";
+  static const msgImageSource = "image_source";
   static const msgNext = "next";
   static const msgMcq = "mcq";
 

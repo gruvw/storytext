@@ -17,7 +17,8 @@ personas:
 "1":
   persona: "1"
   text: Hello <https://youtu.be/TBikbn5XJhg>!
-  picture: picture_name_1
+  image: black_hole.png
+  image_source: https://en.wikipedia.org/wiki/Black_hole
   next: "2"
 "2":
   persona: "2"
@@ -33,7 +34,8 @@ personas:
   next: "4"
 "4":
   persona: "1"
-  picture: picture_name_2
+  image: periodic_table.png
+  image_source: https://www.acs.org/education/whatischemistry/periodictable.html
   reply: "3"
   next: "5"
 "5":

@@ -8,14 +8,16 @@ typedef MessageId = String;
 class Message {
   final PersonaId personaId;
   final String? text;
-  final String? picture;
+  final String? image;
+  final String? imageSource;
   final String? next;
   final List<Choice>? mcq;
 
   Message({
     required this.personaId,
     required this.text,
-    required this.picture,
+    required this.image,
+    required this.imageSource,
     required this.next,
     required this.mcq,
   });
@@ -24,7 +26,8 @@ class Message {
     return Message(
       personaId: message[YamlKeys.msgPersona],
       text: message[YamlKeys.msgText],
-      picture: message[YamlKeys.msgPicture],
+      image: message[YamlKeys.msgImage],
+      imageSource: message[YamlKeys.msgImageSource],
       next: message[YamlKeys.msgNext],
       mcq: Choice.fromMcq(message[YamlKeys.msgMcq]),
     );

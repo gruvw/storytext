@@ -64,13 +64,16 @@ class McqUi extends StatelessWidget {
         for (final choice in mcq)
           ElevatedButton(
             style: ElevatedButton.styleFrom(
+              disabledBackgroundColor: ChoiceType.path.color,
               backgroundColor: ChoiceType.fromChoice(
                 choice: choice,
                 chosenPath: chosenPath,
                 chatList: chatList,
               ).color,
             ),
-            onPressed: () => chatList.setChoice(messageId, choice.next),
+            onPressed: choice.next != chosenPath
+                ? () => chatList.setChoice(messageId, choice.next)
+                : null,
             child: Text(choice.answer),
           ),
         if (chosenPathText != null)

@@ -1,12 +1,15 @@
 import "package:flutter/material.dart";
-import "package:flutter_markdown/flutter_markdown.dart";
 import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
+import "package:storytext/utils/dart.dart";
+import "package:storytext/views/components/image_ui.dart";
+import "package:storytext/views/components/markdown_content.dart";
 import "package:storytext/views/components/mcq_ui.dart";
 import "package:storytext/views/components/persona_ui.dart";
-import "package:url_launcher/url_launcher.dart";
 
 class MessageUi extends StatelessWidget {
+  static const _storyAssetsPath = "images/story/";
+
   final ChatList chatList;
   final MessageId messageId;
 
@@ -19,17 +22,15 @@ class MessageUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final message = Message.fromDocument(chatList.storyDoc, messageId);
-    final content = message.text != null
-        ? MarkdownBody(
-            data: message.text!,
-            selectable: true,
-            onTapLink: (text, url, title) {
-              launchUrl(Uri.parse(url!));
-            },
-          )
-        : null;
+    final content = message.text.nMap((t) => MarkdownContent(content: t));
     // TODO message UI widget
     // TODO picture field integration
+    final image = message.image.nMap(
+      (p) => ImageUi(
+        path: _storyAssetsPath + p,
+        source: message.imageSource,
+      ),
+    );
 
     final mcq = message.mcq != null
         ? McqUi(
@@ -47,6 +48,7 @@ class MessageUi extends StatelessWidget {
           personaId: message.personaId,
         ),
         if (content != null) content,
+        if (image != null) image,
         if (mcq != null) mcq,
       ],
     );
