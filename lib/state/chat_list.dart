@@ -51,6 +51,8 @@ class ChatList with ChangeNotifier {
     } else {
       chatList._messageIds.add(spHeadValue);
       await chatList._persistHead();
+
+      chatList._scheduleNext();
     }
 
     return chatList;
@@ -81,12 +83,18 @@ class ChatList with ChangeNotifier {
   }
 
   Future<void> setChoice(MessageId messageId, MessageId nextId) async {
-    // TODO strip away messages since mcq
+    final mcqIndex = _messageIds.indexOf(messageId);
+    if (mcqIndex != -1) {
+      _clearSince(mcqIndex);
+    }
+
     await _sp.setString(messageId + _choiceSuffix, nextId);
 
     notifyListeners();
 
-    _scheduleNext();
+    if (mcqIndex != -1) {
+      _scheduleNext();
+    }
   }
 
   MessageId? getChosenPath(MessageId messageId) {
@@ -190,7 +198,7 @@ class ChatList with ChangeNotifier {
     await _write(id);
   }
 
-  Future<void> _clearFrom(int index) async {
+  Future<void> _clearSince(int index) async {
     _messageIds.removeRange(0, index);
     await _persistHead();
     notifyListeners();
@@ -208,8 +216,8 @@ class ChatList with ChangeNotifier {
     await _sp.setStringList(messageId, currentParents);
 
     _messageIds.insert(0, messageId);
-
     await _persistHead();
+
     _typingPersona = null;
 
     notifyListeners();
