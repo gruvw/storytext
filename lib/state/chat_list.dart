@@ -13,16 +13,21 @@ import "package:yaml/yaml.dart";
 class ChatList with ChangeNotifier {
   static const _choiceSuffix = "-2fH2yo";
 
-  final YamlMap setupDoc;
-  final YamlMap storyDoc;
-
-  Persona? typingPersona;
-
   // persistent storage
   final SharedPreferences _sp;
 
   // cached linked message ids, newest first
   final List<MessageId> _messageIds;
+
+  Future<void>? _scheduledMessage;
+  bool _cancelled = false;
+  bool get cancelled => _cancelled;
+
+  final YamlMap setupDoc;
+  final YamlMap storyDoc;
+
+  Persona? _typingPersona;
+  Persona? get typingPersona => _typingPersona;
 
   ChatList._({
     required this.setupDoc,
@@ -30,7 +35,7 @@ class ChatList with ChangeNotifier {
     required SharedPreferences sp,
   })  : _sp = sp,
         _messageIds = [],
-        typingPersona = null;
+        _typingPersona = null;
 
   static Future<ChatList> create({
     required YamlMap setupDoc,
@@ -40,27 +45,28 @@ class ChatList with ChangeNotifier {
     final chatList = ChatList._(setupDoc: setupDoc, storyDoc: storyDoc, sp: sp);
 
     final spHeadValue = chatList._sp.getString(SharedPreferencesKeys.head);
-    final firstMessageId = storyDoc.entries.first.key;
-    final head = spHeadValue ?? firstMessageId;
     if (spHeadValue == null) {
-      await chatList._sp.setStringList(firstMessageId, []);
+      // empty state, first launch
+      chatList.scheduleAsRoot(chatList.storyRoot);
+    } else {
+      chatList._messageIds.add(spHeadValue);
+      await chatList._persistHead();
     }
-
-    chatList._messageIds.add(head);
-    await chatList._persistHead();
-
-    chatList._scheduleNext();
 
     return chatList;
   }
 
+  MessageId get storyRoot => storyDoc.entries.first.key;
+  bool get isEmpty => _messageIds.isEmpty;
+  bool get isNotEmpty => !isEmpty;
   MessageId get head => _messageIds.first;
 
   MessageId? getMessageIdAt(int index) {
-    // index 0 used for typing indicator
-    --index;
-
     var currentIndex = _messageIds.length - 1;
+    if (currentIndex < 0) {
+      return null;
+    }
+
     while (index > currentIndex) {
       final current = _messageIds[currentIndex];
       final parents = _sp.getStringList(current)!;
@@ -75,11 +81,12 @@ class ChatList with ChangeNotifier {
   }
 
   Future<void> setChoice(MessageId messageId, MessageId nextId) async {
+    // TODO strip away messages since mcq
     await _sp.setString(messageId + _choiceSuffix, nextId);
 
     notifyListeners();
 
-    await scheduleMsg(nextId);
+    _scheduleNext();
   }
 
   MessageId? getChosenPath(MessageId messageId) {
@@ -91,35 +98,27 @@ class ChatList with ChangeNotifier {
   }
 
   Future<void> _persistHead() async {
-    await _sp.setString(SharedPreferencesKeys.head, _messageIds.first);
+    await _sp.setString(SharedPreferencesKeys.head, head);
   }
 
-  Future<void> _scheduleNext() async {
-    final message = Message.fromDocument(storyDoc, head);
+  Future<void> scheduleAsRoot(MessageId firstId) async {
+    // cancel further scheduling, break messages scheduling chain
+    _cancelled = true;
+    notifyListeners();
+    await _scheduledMessage;
+    _cancelled = false;
 
-    // last interaction requiring scheduling
-    // was either an MCQ answer or next message
-    final mcqPath = getChosenPath(head);
-    final scheduleMessageId = mcqPath ?? message.next;
+    // reset state
+    await _sp.clear();
+    _messageIds.clear();
 
-    if (scheduleMessageId != null) {
-      await scheduleMsg(scheduleMessageId);
-    }
+    // root has no parent, set to empty list
+    await _sp.setStringList(firstId, []);
+
+    await _scheduleWrite(firstId);
   }
 
-  Duration _messageDuration({
-    required String? messageText,
-    required bool hasImage,
-  }) {
-    final textDelay = messageText.nMap(
-          (t) => durationFromText(t),
-        ) ??
-        Duration.zero;
-    final imgDelay = hasImage ? imageDelay : Duration.zero;
-    return textDelay + imgDelay;
-  }
-
-  Future<void> scheduleMsg(MessageId id) async {
+  Future<void> _scheduleMessage(MessageId id) async {
     // TODO if already explored don't wait ?
 
     // time for receiving persona to read
@@ -137,10 +136,40 @@ class ChatList with ChangeNotifier {
       ),
     );
 
+    await _scheduleWrite(id);
+  }
+
+  Future<void> _scheduleNext() async {
+    final message = Message.fromDocument(storyDoc, head);
+
+    // last interaction requiring scheduling
+    // was either an MCQ answer or next message
+    final mcqPath = getChosenPath(head);
+    final scheduleMessageId = mcqPath ?? message.next;
+
+    // schedule next message
+    scheduleMessageId.nMap((m) {
+      _scheduledMessage = _scheduleMessage(m);
+    });
+  }
+
+  Duration _messageDuration({
+    required String? messageText,
+    required bool hasImage,
+  }) {
+    final textDelay = messageText.nMap(
+          (t) => durationFromText(t),
+        ) ??
+        Duration.zero;
+    final imgDelay = hasImage ? imageDelay : Duration.zero;
+    return textDelay + imgDelay;
+  }
+
+  Future<void> _scheduleWrite(MessageId id) async {
     final writeMessage = Message.fromDocument(storyDoc, id);
 
     // apply typing indicator for replying persona
-    typingPersona = Persona.fromDocument(
+    _typingPersona = Persona.fromDocument(
       setupDoc,
       writeMessage.personaId,
     );
@@ -154,6 +183,10 @@ class ChatList with ChangeNotifier {
       ),
     );
 
+    if (_cancelled) {
+      return;
+    }
+
     await write(id);
   }
 
@@ -164,20 +197,23 @@ class ChatList with ChangeNotifier {
   }
 
   Future<void> write(MessageId messageId) async {
-    final parent = _messageIds.first;
+    final activeParent = _messageIds.firstOrNull;
     final currentParents = _sp.getStringList(messageId) ?? [];
 
-    currentParents.remove(parent);
-    currentParents.insert(0, parent);
+    if (activeParent != null) {
+      // set active parent, top of the list
+      currentParents.remove(activeParent);
+      currentParents.insert(0, activeParent);
+    }
     await _sp.setStringList(messageId, currentParents);
 
     _messageIds.insert(0, messageId);
 
     await _persistHead();
-    typingPersona = null;
+    _typingPersona = null;
 
     notifyListeners();
 
-    await _scheduleNext();
+    _scheduleNext();
   }
 }

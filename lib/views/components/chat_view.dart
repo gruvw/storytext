@@ -21,22 +21,28 @@ class ChatView extends HookWidget {
     return ListView.builder(
       reverse: true,
       itemBuilder: (context, index) {
+        if (chatList.cancelled) {
+          // hide chat while waiting for cancelation to complete
+          return null;
+        }
+
+        // first element eaten by typing indicator
         if (index == 0) {
           return chatList.typingPersona.nMap(
                 (p) => PersonaTyping(persona: p),
               ) ??
               const SizedBox();
         }
+        --index;
 
         final messageId = chat.getMessageIdAt(index);
 
-        if (messageId == null) {
-          return null;
-        }
-
-        return MessageUi(
-          chatList: chatList,
-          messageId: messageId,
+        return messageId.nMap(
+          (m) => MessageUi(
+            key: ValueKey(m),
+            chatList: chatList,
+            messageId: m,
+          ),
         );
       },
     );

@@ -24,7 +24,7 @@ class MessageUi extends StatelessWidget {
     final message = Message.fromDocument(chatList.storyDoc, messageId);
     final content = message.text.nMap((t) => MarkdownContent(content: t));
     // TODO message UI widget
-    // TODO picture field integration
+
     final image = message.image.nMap(
       (p) => ImageUi(
         path: _storyAssetsPath + p,

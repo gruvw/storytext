@@ -36,4 +36,8 @@ class Message {
   factory Message.fromDocument(YamlMap document, MessageId id) {
     return Message.fromMap(document[id]);
   }
+
+  static bool existsInDocument(YamlMap document, MessageId id) {
+    return document[id] != null;
+  }
 }

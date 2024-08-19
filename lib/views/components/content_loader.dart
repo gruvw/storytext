@@ -26,7 +26,11 @@ class ContentLoader extends StatelessWidget {
       }),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
 
         return builder(context, snapshot.data!);
