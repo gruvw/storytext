@@ -9,7 +9,7 @@ import "package:storytext/utils/dart.dart";
 import "package:yaml/yaml.dart";
 
 /// Observable, range resettable, cached, multi-parent,
-/// path persisted, linked list data structure
+/// path persisted, schedulable dispatch, linked list data structure
 class ChatList with ChangeNotifier {
   static const _choiceSuffix = "-2fH2yo";
 
@@ -97,10 +97,6 @@ class ChatList with ChangeNotifier {
     return _sp.containsKey(messageId);
   }
 
-  Future<void> _persistHead() async {
-    await _sp.setString(SharedPreferencesKeys.head, head);
-  }
-
   Future<void> scheduleAsRoot(MessageId firstId) async {
     // cancel further scheduling, break messages scheduling chain
     _cancelled = true;
@@ -116,6 +112,10 @@ class ChatList with ChangeNotifier {
     await _sp.setStringList(firstId, []);
 
     await _scheduleWrite(firstId);
+  }
+
+  Future<void> _persistHead() async {
+    await _sp.setString(SharedPreferencesKeys.head, head);
   }
 
   Future<void> _scheduleMessage(MessageId id) async {
@@ -187,16 +187,16 @@ class ChatList with ChangeNotifier {
       return;
     }
 
-    await write(id);
+    await _write(id);
   }
 
-  Future<void> clearFrom(int index) async {
+  Future<void> _clearFrom(int index) async {
     _messageIds.removeRange(0, index);
     await _persistHead();
     notifyListeners();
   }
 
-  Future<void> write(MessageId messageId) async {
+  Future<void> _write(MessageId messageId) async {
     final activeParent = _messageIds.firstOrNull;
     final currentParents = _sp.getStringList(messageId) ?? [];
 

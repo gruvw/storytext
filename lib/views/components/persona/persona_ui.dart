@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:storytext/models/persona.dart";
 import "package:storytext/state/chat_list.dart";
-import "package:storytext/views/components/persona_avatar.dart";
+import "package:storytext/views/components/persona/persona_avatar.dart";
 
 class PersonaUI extends StatelessWidget {
   final ChatList chatList;

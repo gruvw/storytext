@@ -2,10 +2,10 @@ import "package:flutter/material.dart";
 import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
 import "package:storytext/utils/dart.dart";
-import "package:storytext/views/components/image_ui.dart";
 import "package:storytext/views/components/markdown_content.dart";
-import "package:storytext/views/components/mcq_ui.dart";
-import "package:storytext/views/components/persona_ui.dart";
+import "package:storytext/views/components/message/image_ui.dart";
+import "package:storytext/views/components/message/mcq_ui.dart";
+import "package:storytext/views/components/persona/persona_ui.dart";
 
 class MessageUi extends StatelessWidget {
   static const _storyAssetsPath = "images/story/";
@@ -32,13 +32,13 @@ class MessageUi extends StatelessWidget {
       ),
     );
 
-    final mcq = message.mcq != null
-        ? McqUi(
-            chatList: chatList,
-            messageId: messageId,
-            mcq: message.mcq!,
-          )
-        : null;
+    final mcq = message.mcq.nMap(
+      (m) => McqUi(
+        chatList: chatList,
+        messageId: messageId,
+        mcq: message.mcq!,
+      ),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,8 +3,8 @@ import "package:flutter_hooks/flutter_hooks.dart";
 import "package:storytext/state/chat_list.dart";
 import "package:storytext/state/hooks.dart";
 import "package:storytext/utils/dart.dart";
-import "package:storytext/views/components/message_ui.dart";
-import "package:storytext/views/components/persona_typing.dart";
+import "package:storytext/views/components/message/message_ui.dart";
+import "package:storytext/views/components/persona/persona_typing.dart";
 
 class ChatView extends HookWidget {
   final ChatList chatList;

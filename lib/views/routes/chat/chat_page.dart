@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:storytext/static/values.dart";
-import "package:storytext/views/components/chat_view.dart";
 import "package:storytext/views/components/content_loader.dart";
 import "package:storytext/views/components/story_jumping_dialog.dart";
+import "package:storytext/views/routes/chat/chat_view.dart";
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
