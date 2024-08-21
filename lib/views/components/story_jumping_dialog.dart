@@ -32,12 +32,13 @@ class StoryJumpingDialog extends HookWidget {
     return AlertDialog(
       title: const Text("Story Jumping"),
       content: TextField(
+        controller: targetIdController,
+        autofocus: true,
         decoration: InputDecoration(
           label: const Text("Message ID"),
           hintText: chatList.isNotEmpty ? chatList.head : chatList.storyRoot,
           errorText: errorText.value.isEmpty ? null : errorText.value,
         ),
-        controller: targetIdController,
         onChanged: (_) {
           if (validTarget() == null && targetIdController.text.isNotEmpty) {
             errorText.value = "Invalid target message ID.";
@@ -46,6 +47,7 @@ class StoryJumpingDialog extends HookWidget {
           }
         },
       ),
+      actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         TextButton(
           onPressed: () {
@@ -77,7 +79,7 @@ class StoryJumpingDialog extends HookWidget {
             overlayColor: Styles.colorDanger,
             side: const BorderSide(color: Styles.colorDanger),
           ),
-          child: const Text("Go To"),
+          child: const Text("Jump"),
         ),
       ],
     );

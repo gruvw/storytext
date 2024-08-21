@@ -40,6 +40,8 @@ class MessageUi extends StatelessWidget {
       ),
     );
 
+    const heightGap = SizedBox(height: 6);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,8 +49,14 @@ class MessageUi extends StatelessWidget {
           chatList: chatList,
           personaId: message.personaId,
         ),
-        if (content != null) content,
-        if (image != null) image,
+        if (content != null) ...[
+          heightGap,
+          content,
+        ],
+        if (image != null) ...[
+          heightGap,
+          image,
+        ],
         if (mcq != null) mcq,
       ],
     );

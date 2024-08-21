@@ -21,6 +21,7 @@ class PersonaUI extends StatelessWidget {
     return Row(
       children: [
         PersonaAvatar(persona: persona),
+        const SizedBox(width: 6),
         Text(persona.name),
       ],
     );

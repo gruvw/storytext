@@ -4,10 +4,12 @@ import "package:url_launcher/url_launcher.dart";
 
 class MarkdownContent extends StatelessWidget {
   final String content;
+  final double scaleFactor;
 
   const MarkdownContent({
     super.key,
     required this.content,
+    this.scaleFactor = 1.2,
   });
 
   @override
@@ -15,6 +17,9 @@ class MarkdownContent extends StatelessWidget {
     return MarkdownBody(
       data: content,
       selectable: true,
+      styleSheet: MarkdownStyleSheet(
+        textScaler: TextScaler.linear(scaleFactor),
+      ),
       onTapLink: (text, url, title) {
         launchUrl(Uri.parse(url!));
       },

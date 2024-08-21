@@ -37,12 +37,17 @@ class ChatView extends HookWidget {
 
         final messageId = chat.getMessageIdAt(index);
 
-        return messageId.nMap(
+        final messageUi = messageId.nMap(
           (m) => MessageUi(
             key: ValueKey(m),
             chatList: chatList,
             messageId: m,
           ),
+        );
+
+        return Padding(
+          padding: const EdgeInsets.only(left: 8, bottom: 8),
+          child: messageUi,
         );
       },
     );

@@ -18,7 +18,10 @@ class ImageUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageSource = source.nMap(
-      (s) => MarkdownContent(content: _sourcePrefix + s),
+      (s) => MarkdownContent(
+        content: _sourcePrefix + s,
+        scaleFactor: 1,
+      ),
     );
 
     final image = ConstrainedBox(
@@ -32,15 +35,12 @@ class ImageUi extends StatelessWidget {
       ),
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          image,
-          if (imageSource != null) imageSource,
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image,
+        if (imageSource != null) imageSource,
+      ],
     );
   }
 }
