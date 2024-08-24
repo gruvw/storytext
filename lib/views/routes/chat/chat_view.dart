@@ -7,6 +7,9 @@ import "package:storytext/views/components/message/message_ui.dart";
 import "package:storytext/views/components/persona/persona_typing.dart";
 
 class ChatView extends HookWidget {
+  static const _messageBottomSpacing = 10.0;
+  static const _contentPadding = 8.0;
+
   final ChatList chatList;
 
   const ChatView({
@@ -18,41 +21,48 @@ class ChatView extends HookWidget {
   Widget build(BuildContext context) {
     final chat = useListenableState(chatList);
 
-    return ListView.builder(
-      reverse: true,
-      itemBuilder: (context, index) {
-        if (chatList.cancelled) {
-          // hide chat while waiting for cancelation to complete
-          return null;
-        }
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: _contentPadding,
+        bottom: _contentPadding,
+        right: _contentPadding,
+      ),
+      child: ListView.builder(
+        reverse: true,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          if (chatList.cancelled) {
+            // hide chat while waiting for cancelation to complete
+            return null;
+          }
 
-        // first element eaten by typing indicator
-        if (index == 0) {
-          return chatList.typingPersona.nMap(
-                (p) => PersonaTyping(persona: p),
-              ) ??
-              const SizedBox();
-        }
-        --index;
+          // first element eaten by typing indicator
+          if (index == 0) {
+            return chatList.typingPersona.nMap(
+                  (p) => PersonaTyping(persona: p),
+                ) ??
+                const SizedBox();
+          }
+          --index;
 
-        final messageId = chat.getMessageIdAt(index);
+          final messageId = chat.getMessageIdAt(index);
 
-        final messageUi = messageId.nMap(
-          (m) => MessageUi(
-            key: ValueKey(m),
-            chatList: chatList,
-            messageId: m,
-          ),
-        );
+          final messageUi = messageId.nMap(
+            (m) => MessageUi(
+              key: ValueKey(m),
+              chatList: chatList,
+              messageId: m,
+            ),
+          );
 
-        return Padding(
-          padding: const EdgeInsets.only(
-            left: 8,
-            bottom: 8,
-          ),
-          child: messageUi,
-        );
-      },
+          return Padding(
+            padding: const EdgeInsets.only(
+              bottom: _messageBottomSpacing,
+            ),
+            child: messageUi,
+          );
+        },
+      ),
     );
   }
 }

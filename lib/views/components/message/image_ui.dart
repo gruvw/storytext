@@ -4,6 +4,9 @@ import "package:storytext/views/components/markdown_content.dart";
 import "package:widget_zoom/widget_zoom.dart";
 
 class ImageUi extends StatelessWidget {
+  static const _maxWidth = 350.0;
+  static const _maxHeight = 150.0;
+
   static const _sourcePrefix = "Source: ";
 
   final String path;
@@ -24,14 +27,17 @@ class ImageUi extends StatelessWidget {
       ),
     );
 
-    final image = ConstrainedBox(
+    final image = Container(
       constraints: const BoxConstraints(
-        maxWidth: 350,
-        maxHeight: 150,
+        maxWidth: _maxWidth,
+        maxHeight: _maxHeight,
       ),
       child: WidgetZoom(
         heroAnimationTag: path,
-        zoomWidget: Image.asset(path),
+        zoomWidget: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.asset(path),
+        ),
       ),
     );
 

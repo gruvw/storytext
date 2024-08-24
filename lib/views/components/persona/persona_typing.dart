@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import "package:storytext/models/persona.dart";
+import "package:storytext/static/styles.dart";
+import "package:storytext/views/components/message_bubble.dart";
 import "package:storytext/views/components/persona/persona_avatar.dart";
 
 class PersonaTyping extends StatelessWidget {
@@ -16,10 +18,9 @@ class PersonaTyping extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO typing indicator UI
     final avatar = PersonaAvatar(persona: persona);
     const typingCircle = CircleAvatar(
-      backgroundColor: Colors.grey,
+      backgroundColor: Styles.typingCircleColor,
       minRadius: _circleRadius,
       maxRadius: _circleRadius,
     );
@@ -28,12 +29,18 @@ class PersonaTyping extends StatelessWidget {
       children: List.filled(_circlePerIndicator, typingCircle),
     );
 
-    return Row(
-      children: [
-        avatar,
-        const SizedBox(width: 1.5 * _circleSpacing),
-        typingIndicator,
-      ],
+    return MessageBubble(
+      child: Row(
+        children: [
+          avatar,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 1.5 * _circleSpacing,
+            ),
+            child: typingIndicator,
+          ),
+        ],
+      ),
     );
   }
 }

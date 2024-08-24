@@ -4,6 +4,9 @@ import "package:storytext/state/chat_list.dart";
 import "package:storytext/views/components/persona/persona_avatar.dart";
 
 class PersonaUI extends StatelessWidget {
+  static const _pictureNameSpacing = 6.0;
+  static const _bottomSpacing = 2.0;
+
   final ChatList chatList;
   final PersonaId personaId;
 
@@ -17,13 +20,15 @@ class PersonaUI extends StatelessWidget {
   Widget build(BuildContext context) {
     final persona = Persona.fromDocument(chatList.setupDoc, personaId);
 
-    // TODO persona UI
-    return Row(
-      children: [
-        PersonaAvatar(persona: persona),
-        const SizedBox(width: 6),
-        Text(persona.name),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: _bottomSpacing),
+      child: Row(
+        children: [
+          PersonaAvatar(persona: persona),
+          const SizedBox(width: _pictureNameSpacing),
+          Text(persona.name),
+        ],
+      ),
     );
   }
 }

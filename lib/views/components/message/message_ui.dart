@@ -5,10 +5,12 @@ import "package:storytext/utils/dart.dart";
 import "package:storytext/views/components/markdown_content.dart";
 import "package:storytext/views/components/message/image_ui.dart";
 import "package:storytext/views/components/message/mcq_ui.dart";
+import "package:storytext/views/components/message_bubble.dart";
 import "package:storytext/views/components/persona/persona_ui.dart";
 
 class MessageUi extends StatelessWidget {
   static const _storyAssetsPath = "images/story/";
+  static const _imageSpacing = 4.0;
 
   final ChatList chatList;
   final MessageId messageId;
@@ -23,7 +25,6 @@ class MessageUi extends StatelessWidget {
   Widget build(BuildContext context) {
     final message = Message.fromDocument(chatList.storyDoc, messageId);
     final content = message.text.nMap((t) => MarkdownContent(content: t));
-    // TODO message UI widget
 
     final image = message.image.nMap(
       (p) => ImageUi(
@@ -40,8 +41,6 @@ class MessageUi extends StatelessWidget {
       ),
     );
 
-    const heightGap = SizedBox(height: 6);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,13 +48,18 @@ class MessageUi extends StatelessWidget {
           chatList: chatList,
           personaId: message.personaId,
         ),
-        if (content != null) ...[
-          heightGap,
-          content,
-        ],
+        if (content != null)
+          MessageBubble(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: content,
+            ),
+          ),
         if (image != null) ...[
-          heightGap,
-          image,
+          Padding(
+            padding: const EdgeInsets.only(top: _imageSpacing),
+            child: image,
+          ),
         ],
         if (mcq != null) mcq,
       ],
