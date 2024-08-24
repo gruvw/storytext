@@ -46,7 +46,10 @@ class ChatView extends HookWidget {
         );
 
         return Padding(
-          padding: const EdgeInsets.only(left: 8, bottom: 8),
+          padding: const EdgeInsets.only(
+            left: 8,
+            bottom: 8,
+          ),
           child: messageUi,
         );
       },
