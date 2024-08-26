@@ -62,7 +62,6 @@ class McqUi extends StatelessWidget {
     // TODO use the same rounded factor on buttons
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (final choice in mcq)
           ElevatedButton(
@@ -80,25 +79,25 @@ class McqUi extends StatelessWidget {
             child: Text(choice.answer),
           ),
         if (chosenPathText != null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                  left: Styles.senderPadding,
-                ),
-                constraints: const BoxConstraints(
-                  maxWidth: Styles.senderMaxWidth,
-                ),
-                child: MessageBubble(
-                  color: Styles.answerBubbleColor,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    child: Text(chosenPathText),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.only(
+                left: Styles.senderPadding,
+              ),
+              constraints: const BoxConstraints(
+                maxWidth: Styles.senderMaxWidth,
+              ),
+              child: MessageBubble(
+                color: Styles.answerBubbleColor,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Styles.textBubbleHorizontalPadding,
                   ),
+                  child: Text(chosenPathText),
                 ),
               ),
-            ],
+            ),
           ),
       ],
     );

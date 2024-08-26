@@ -35,10 +35,12 @@ class MessageUi extends StatelessWidget {
     );
 
     final mcq = message.mcq.nMap(
-      (m) => McqUi(
-        chatList: chatList,
-        messageId: messageId,
-        mcq: message.mcq!,
+      (m) => Center(
+        child: McqUi(
+          chatList: chatList,
+          messageId: messageId,
+          mcq: message.mcq!,
+        ),
       ),
     );
 
@@ -55,7 +57,9 @@ class MessageUi extends StatelessWidget {
           if (content != null)
             MessageBubble(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Styles.textBubbleHorizontalPadding,
+                ),
                 child: content,
               ),
             ),

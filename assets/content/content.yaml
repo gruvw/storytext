@@ -24,7 +24,7 @@ personas:
   persona: "2"
   text: I have a **question**
   mcq:
-    - answer: Answer 1
+    - answer: Answer 1 this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario
       next: "3"
     - answer: Answer 2
       next: "4"

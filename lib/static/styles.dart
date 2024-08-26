@@ -16,4 +16,6 @@ abstract class Styles {
   static const roundedRadius = 14.0;
   static const senderPadding = 20.0;
   static const senderMaxWidth = 900.0;
+
+  static const textBubbleHorizontalPadding = 3.0;
 }

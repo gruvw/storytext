@@ -29,7 +29,6 @@ class ChatView extends HookWidget {
       ),
       child: ListView.builder(
         reverse: true,
-        shrinkWrap: true,
         itemBuilder: (context, index) {
           if (chatList.cancelled) {
             // hide chat while waiting for cancelation to complete
