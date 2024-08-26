@@ -19,8 +19,6 @@ class ChatView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO list view stop scrolling in reverse direction
-
     final chat = useListenableState(chatList);
 
     return Padding(
@@ -50,19 +48,19 @@ class ChatView extends HookWidget {
           final messageId = chat.getMessageIdAt(index);
 
           final messageUi = messageId.nMap(
-            (m) => MessageUi(
-              key: ValueKey(m),
-              chatList: chatList,
-              messageId: m,
+            (m) => Padding(
+              padding: const EdgeInsets.only(
+                bottom: _messageBottomSpacing,
+              ),
+              child: MessageUi(
+                key: ValueKey(m),
+                chatList: chatList,
+                messageId: m,
+              ),
             ),
           );
 
-          return Padding(
-            padding: const EdgeInsets.only(
-              bottom: _messageBottomSpacing,
-            ),
-            child: messageUi,
-          );
+          return messageUi;
         },
       ),
     );
