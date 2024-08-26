@@ -16,9 +16,9 @@ personas:
 # Story
 "1":
   persona: "1"
-  text: Hello <https://youtu.be/TBikbn5XJhg>!
+  text: Hello <https://youtu.be/TBikbn5XJhg>! this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario this is me mario
   image: black_hole.png
-  image_source: https://en.wikipedia.org/wiki/Black_hole
+  image_source: https://en.wikipedia.org/wiki/Black_holeasoneuhanosuehsaoneuhansouhnasoehusnaouehnsaothusaonehusoneahunaoseuhnsaoeuhansouehsanouhasonuhnsaoeuhsaontuhsnaoehusoneuhosanehuoasntueoasnuh/aoeusthaoesun/aoseuthanosheoasnuh/aoeusthaoesun/aoseuthanosheoasnuh/aoeusthaoesun/aoseuthanosh
   next: "2"
 "2":
   persona: "2"

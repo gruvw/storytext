@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
+import "package:storytext/static/styles.dart";
 import "package:storytext/utils/dart.dart";
 import "package:storytext/views/components/markdown_content.dart";
 import "package:storytext/views/components/message/image_ui.dart";
@@ -41,26 +42,37 @@ class MessageUi extends StatelessWidget {
       ),
     );
 
+    final body = Container(
+      padding: const EdgeInsets.only(right: Styles.senderPadding),
+      constraints: const BoxConstraints(maxWidth: Styles.senderMaxWidth),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PersonaUI(
+            chatList: chatList,
+            personaId: message.personaId,
+          ),
+          if (content != null)
+            MessageBubble(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: content,
+              ),
+            ),
+          if (image != null) ...[
+            Padding(
+              padding: const EdgeInsets.only(top: _imageSpacing),
+              child: image,
+            ),
+          ],
+        ],
+      ),
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PersonaUI(
-          chatList: chatList,
-          personaId: message.personaId,
-        ),
-        if (content != null)
-          MessageBubble(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: content,
-            ),
-          ),
-        if (image != null) ...[
-          Padding(
-            padding: const EdgeInsets.only(top: _imageSpacing),
-            child: image,
-          ),
-        ],
+        body,
         if (mcq != null) mcq,
       ],
     );

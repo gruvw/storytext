@@ -26,7 +26,10 @@ class PersonaUI extends StatelessWidget {
         children: [
           PersonaAvatar(persona: persona),
           const SizedBox(width: _pictureNameSpacing),
-          Text(persona.name),
+          Text(
+            persona.name,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );

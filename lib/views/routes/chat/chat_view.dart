@@ -19,6 +19,8 @@ class ChatView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO list view stop scrolling in reverse direction
+
     final chat = useListenableState(chatList);
 
     return Padding(

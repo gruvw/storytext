@@ -2,13 +2,14 @@ import "package:flutter/material.dart";
 import "package:storytext/models/choice.dart";
 import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
+import "package:storytext/static/styles.dart";
 import "package:storytext/utils/dart.dart";
+import "package:storytext/views/components/message_bubble.dart";
 
 enum ChoiceType {
-  unexplored(Colors.blue),
-  explored(Colors.purple),
-  path(Colors.green);
-  // TODO UI, better colors
+  unexplored(Styles.unexploredMcqColor),
+  explored(Styles.exploredMcqColor),
+  path(Styles.pathMcqColor);
 
   final Color color;
 
@@ -58,6 +59,8 @@ class McqUi extends StatelessWidget {
     final chosenPath = chatList.getChosenPath(messageId);
     final chosenPathText = chosenPath.nMap((c) => mcq.withNext(c).answer);
 
+    // TODO use the same rounded factor on buttons
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -80,7 +83,21 @@ class McqUi extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(chosenPathText),
+              Container(
+                padding: const EdgeInsets.only(
+                  left: Styles.senderPadding,
+                ),
+                constraints: const BoxConstraints(
+                  maxWidth: Styles.senderMaxWidth,
+                ),
+                child: MessageBubble(
+                  color: Styles.answerBubbleColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: Text(chosenPathText),
+                  ),
+                ),
+              ),
             ],
           ),
       ],

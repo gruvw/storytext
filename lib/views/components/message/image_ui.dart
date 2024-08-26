@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:storytext/static/styles.dart";
 import "package:storytext/utils/dart.dart";
 import "package:storytext/views/components/markdown_content.dart";
 import "package:widget_zoom/widget_zoom.dart";
@@ -35,7 +36,9 @@ class ImageUi extends StatelessWidget {
       child: WidgetZoom(
         heroAnimationTag: path,
         zoomWidget: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(
+            Styles.roundedRadius,
+          ),
           child: Image.asset(path),
         ),
       ),
