@@ -41,6 +41,9 @@ enum ChoiceType {
 }
 
 class McqUi extends StatelessWidget {
+  static const _answerSpacing = 8.0;
+  static const _choiceSpacing = 6.0;
+
   final ChatList chatList;
   final MessageId messageId;
 
@@ -60,25 +63,44 @@ class McqUi extends StatelessWidget {
     final chosenPathText = chosenPath.nMap((c) => mcq.withNext(c).answer);
 
     // TODO use the same rounded factor on buttons
+    // final choices = Wrap(
+    //   direction: Axis.vertical,
+    //   spacing: _choiceSpacing,
+    //   children: [
+    //   ],
+    // );
 
     return Column(
       children: [
-        for (final choice in mcq)
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              disabledBackgroundColor: ChoiceType.path.color,
-              backgroundColor: ChoiceType.fromChoice(
+        for (final choice in mcq) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Styles.senderPadding,
+            ),
+            constraints: const BoxConstraints(
+              maxWidth: 0.8 * Styles.senderMaxWidth,
+            ),
+            child: MessageBubble(
+              color: ChoiceType.fromChoice(
                 choice: choice,
                 chosenPath: chosenPath,
                 chatList: chatList,
               ).color,
+              onClick: choice.next != chosenPath
+                  ? () => chatList.setChoice(messageId, choice.next)
+                  : null,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Styles.textBubbleHorizontalPadding,
+                ),
+                child: Text(choice.answer),
+              ),
             ),
-            onPressed: choice.next != chosenPath
-                ? () => chatList.setChoice(messageId, choice.next)
-                : null,
-            child: Text(choice.answer),
           ),
-        if (chosenPathText != null)
+          const SizedBox(height: _choiceSpacing),
+        ],
+        if (chosenPathText != null) ...[
+          const SizedBox(height: _answerSpacing),
           Align(
             alignment: Alignment.centerRight,
             child: Container(
@@ -99,6 +121,7 @@ class McqUi extends StatelessWidget {
               ),
             ),
           ),
+        ],
       ],
     );
   }

@@ -12,6 +12,7 @@ import "package:storytext/views/components/persona/persona_ui.dart";
 class MessageUi extends StatelessWidget {
   static const _storyAssetsPath = "images/story/";
   static const _imageSpacing = 4.0;
+  static const _mcqSpacing = 6.0;
 
   final ChatList chatList;
   final MessageId messageId;
@@ -77,7 +78,10 @@ class MessageUi extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         body,
-        if (mcq != null) mcq,
+        if (mcq != null) ...[
+          const SizedBox(height: _mcqSpacing),
+          mcq,
+        ],
       ],
     );
   }

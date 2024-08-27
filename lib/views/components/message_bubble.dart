@@ -5,6 +5,7 @@ class MessageBubble extends StatelessWidget {
   static const _contentPadding = 6.0;
 
   final Widget? child;
+  final VoidCallback? onClick;
   final Color color;
   final bool topBorder;
   final bool bottomBorder;
@@ -14,6 +15,7 @@ class MessageBubble extends StatelessWidget {
     this.color = Styles.messageBubbleColor,
     this.topBorder = true,
     this.bottomBorder = true,
+    this.onClick,
     this.child,
   });
 
@@ -21,7 +23,7 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     const radius = Radius.circular(Styles.roundedRadius);
 
-    return Container(
+    final bubble = Container(
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.only(
@@ -33,6 +35,16 @@ class MessageBubble extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(_contentPadding),
       child: child,
+    );
+
+    final callback = onClick;
+    if (callback == null) {
+      return bubble;
+    }
+
+    return InkWell(
+      onTap: callback,
+      child: bubble,
     );
   }
 }
