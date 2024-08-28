@@ -5,6 +5,7 @@ import "package:storytext/state/chat_list.dart";
 import "package:storytext/static/styles.dart";
 import "package:storytext/utils/dart.dart";
 import "package:storytext/views/components/message_bubble.dart";
+import "package:storytext/views/components/persona/persona_ui.dart";
 
 enum ChoiceType {
   unexplored(Styles.unexploredMcqColor),
@@ -41,8 +42,8 @@ enum ChoiceType {
 }
 
 class McqUi extends StatelessWidget {
-  static const _answerSpacing = 8.0;
   static const _choiceSpacing = 6.0;
+  static const _answerSpacing = Styles.messageBottomSpacing - _choiceSpacing;
 
   final ChatList chatList;
   final MessageId messageId;
@@ -58,17 +59,8 @@ class McqUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO mcq UI
     final chosenPath = chatList.getChosenPath(messageId);
     final chosenPathText = chosenPath.nMap((c) => mcq.withNext(c).answer);
-
-    // TODO use the same rounded factor on buttons
-    // final choices = Wrap(
-    //   direction: Axis.vertical,
-    //   spacing: _choiceSpacing,
-    //   children: [
-    //   ],
-    // );
 
     return Column(
       children: [
@@ -78,7 +70,7 @@ class McqUi extends StatelessWidget {
               horizontal: Styles.senderPadding,
             ),
             constraints: const BoxConstraints(
-              maxWidth: 0.8 * Styles.senderMaxWidth,
+              maxWidth: Styles.mcqMaxWidthFactor * Styles.senderMaxWidth,
             ),
             child: MessageBubble(
               color: ChoiceType.fromChoice(
@@ -110,14 +102,20 @@ class McqUi extends StatelessWidget {
               constraints: const BoxConstraints(
                 maxWidth: Styles.senderMaxWidth,
               ),
-              child: MessageBubble(
-                color: Styles.answerBubbleColor,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Styles.textBubbleHorizontalPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text("You ", style: PersonaUI.nameStyle),
+                  MessageBubble(
+                    color: Styles.answerBubbleColor,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Styles.textBubbleHorizontalPadding,
+                      ),
+                      child: Text(chosenPathText),
+                    ),
                   ),
-                  child: Text(chosenPathText),
-                ),
+                ],
               ),
             ),
           ),

@@ -4,6 +4,7 @@ import "package:storytext/state/chat_list.dart";
 import "package:storytext/views/components/persona/persona_avatar.dart";
 
 class PersonaUI extends StatelessWidget {
+  static const nameStyle = TextStyle(fontWeight: FontWeight.w500);
   static const _pictureNameSpacing = 6.0;
   static const _bottomSpacing = 2.0;
 
@@ -26,10 +27,7 @@ class PersonaUI extends StatelessWidget {
         children: [
           PersonaAvatar(persona: persona),
           const SizedBox(width: _pictureNameSpacing),
-          Text(
-            persona.name,
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
+          Text(persona.name, style: nameStyle),
         ],
       ),
     );

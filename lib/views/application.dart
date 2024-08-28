@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
-import "package:hooks_riverpod/hooks_riverpod.dart";
+import "package:storytext/static/styles.dart";
+import "package:storytext/static/values.dart";
 import "package:storytext/views/navigation/routes.dart";
 
 class Application extends StatelessWidget {
@@ -7,13 +8,14 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        title: "StoryText",
-        theme: ThemeData(fontFamily: "Noto"),
-        onGenerateRoute: generateRoute,
-        initialRoute: Routes.chat.name,
+    return MaterialApp(
+      title: Values.applicationTitle,
+      theme: ThemeData(
+        fontFamily: "Noto",
+        colorSchemeSeed: Styles.answerBubbleColor,
       ),
+      onGenerateRoute: generateRoute,
+      initialRoute: Routes.chat.name,
     );
   }
 }
