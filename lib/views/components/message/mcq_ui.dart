@@ -73,6 +73,7 @@ class McqUi extends StatelessWidget {
               maxWidth: Styles.mcqMaxWidthFactor * Styles.senderMaxWidth,
             ),
             child: MessageBubble(
+              border: true,
               color: ChoiceType.fromChoice(
                 choice: choice,
                 chosenPath: chosenPath,

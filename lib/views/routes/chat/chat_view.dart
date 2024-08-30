@@ -21,6 +21,13 @@ class ChatView extends HookWidget {
   Widget build(BuildContext context) {
     final chat = useListenableState(chatList);
 
+    if (chatList.cancelled) {
+      // hide chat while waiting for cancelation to complete
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(
         left: _contentPadding,
@@ -30,11 +37,6 @@ class ChatView extends HookWidget {
       child: ListView.builder(
         reverse: true,
         itemBuilder: (context, index) {
-          if (chatList.cancelled) {
-            // hide chat while waiting for cancelation to complete
-            return null;
-          }
-
           // first element eaten by typing indicator
           if (index == 0) {
             return chatList.typingPersona.nMap(

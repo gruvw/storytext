@@ -82,10 +82,22 @@ class ChatList with ChangeNotifier {
     return _messageIds[index];
   }
 
+  Future<void> _cancel() async {
+    // cancel further scheduling, break messages scheduling chain
+    _cancelled = true;
+    notifyListeners();
+    await _scheduledMessage;
+    _cancelled = false;
+  }
+
   Future<void> setChoice(MessageId messageId, MessageId nextId) async {
+    await _cancel();
+
     final mcqIndex = _messageIds.indexOf(messageId);
     if (mcqIndex != -1) {
       _clearSince(mcqIndex);
+    } else {
+      return;
     }
 
     await _sp.setString(messageId + _choiceSuffix, nextId);
@@ -106,11 +118,7 @@ class ChatList with ChangeNotifier {
   }
 
   Future<void> scheduleAsRoot(MessageId firstId) async {
-    // cancel further scheduling, break messages scheduling chain
-    _cancelled = true;
-    notifyListeners();
-    await _scheduledMessage;
-    _cancelled = false;
+    await _cancel();
 
     // reset state
     await _sp.clear();
@@ -147,7 +155,7 @@ class ChatList with ChangeNotifier {
     await _scheduleWrite(id);
   }
 
-  Future<void> _scheduleNext() async {
+  _scheduleNext() {
     final message = Message.fromDocument(storyDoc, head);
 
     // last interaction requiring scheduling

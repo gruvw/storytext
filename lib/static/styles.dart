@@ -2,12 +2,12 @@ import "package:flutter/material.dart";
 
 abstract class Styles {
   // TODO UI, better colors
-  static const unexploredMcqColor = Colors.blue;
-  static const exploredMcqColor = Colors.purple;
-  static const pathMcqColor = Colors.green;
+  static const messageBubbleColor = Color(0xffdddddd);
+  static const answerBubbleColor = Color(0xff55aaff);
 
-  static const messageBubbleColor = Color(0xffcfcfcf);
-  static const answerBubbleColor = Color(0xffff00ff);
+  static const pathMcqColor = Color(0xff77B7F7);
+  static const exploredMcqColor = Color(0xffAACBEA);
+  static const unexploredMcqColor = Colors.transparent;
 
   static const typingCircleColor = Colors.black54;
 
