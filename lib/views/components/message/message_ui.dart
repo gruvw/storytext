@@ -10,7 +10,7 @@ import "package:storytext/views/components/message_bubble.dart";
 import "package:storytext/views/components/persona/persona_ui.dart";
 
 class MessageUi extends StatelessWidget {
-  static const _storyAssetsPath = "images/story/";
+  static const _storyAssetsPath = "assets/images/story/";
   static const _imageSpacing = 4.0;
   static const _mcqSpacing = 8.0;
 
