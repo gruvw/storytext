@@ -4,6 +4,7 @@ import "package:storytext/models/message.dart";
 import "package:storytext/state/chat_list.dart";
 import "package:storytext/static/styles.dart";
 import "package:storytext/utils/dart.dart";
+import "package:storytext/views/components/markdown_content.dart";
 import "package:storytext/views/components/message_bubble.dart";
 import "package:storytext/views/components/persona/persona_ui.dart";
 
@@ -86,7 +87,11 @@ class McqUi extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                   horizontal: Styles.textBubbleHorizontalPadding,
                 ),
-                child: Text(choice.answer),
+                child: MarkdownContent(
+                  content: choice.answer,
+                  centerText: true,
+                  selectable: false,
+                ),
               ),
             ),
           ),
@@ -113,7 +118,7 @@ class McqUi extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: Styles.textBubbleHorizontalPadding,
                       ),
-                      child: Text(chosenPathText),
+                      child: MarkdownContent(content: chosenPathText),
                     ),
                   ),
                 ],

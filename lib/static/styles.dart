@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 
 abstract class Styles {
-  // TODO UI, better colors
   static const messageBubbleColor = Color(0xffdddddd);
   static const answerBubbleColor = Color(0xff55aaff);
 

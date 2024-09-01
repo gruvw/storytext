@@ -82,6 +82,16 @@ class MessageUi extends StatelessWidget {
           const SizedBox(height: _mcqSpacing),
           mcq,
         ],
+        if (message.next == null && message.mcq == null)
+          const Padding(
+            padding: EdgeInsets.only(
+              top: Styles.messageBottomSpacing,
+            ),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text("END"),
+            ),
+          ),
       ],
     );
   }
