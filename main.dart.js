@@ -80840,7 +80840,7 @@ if(o==null)return p
 return A.au3(!1,!0,p,r,!0,r,r,r,r,r,r,r,r,r,o,r,r,r,r)}}
 A.yI.prototype={
 M(a){var s=null,r=this.c
-return new A.w0(A.fP(r.a[0],s,s,s,s,s,s),s,new A.qj("images/personas/"+r.c,s,s),s,s,s)}}
+return new A.w0(A.fP(r.a[0],s,s,s,s,s,s),s,new A.qj("assets/images/personas/"+r.c,s,s),s,s,s)}}
 A.rI.prototype={
 M(a){var s=null
 return A.apW(A.b([new A.yI(this.c,s),B.MS,A.apE(!1,A.f3(s,A.nx(A.aqo(B.H,A.aO(3,B.Bg,!1,t.l7),B.kl,7),s,s),B.r,s,s,s,s,26,s,B.Dy,s,s,s),B.lJ,s)],t.p),B.bI,B.c0,s)}}
