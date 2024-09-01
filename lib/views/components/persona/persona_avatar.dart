@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:storytext/models/persona.dart";
 
 class PersonaAvatar extends StatelessWidget {
-  static const _personasAssetsPath = "images/personas/";
+  static const _personasAssetsPath = "assets/images/personas/";
 
   final Persona persona;
 
