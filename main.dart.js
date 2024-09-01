@@ -80827,7 +80827,7 @@ A.a6S.prototype={
 $1(a){return new A.iX(a,1.2,!0,!1,null)},
 $S:199}
 A.a6T.prototype={
-$1(a){return new A.oe("images/story/"+a,this.a.d,null)},
+$1(a){return new A.oe("assets/images/story/"+a,this.a.d,null)},
 $S:526}
 A.a6U.prototype={
 $1(a){var s=this.a,r=this.b.f
