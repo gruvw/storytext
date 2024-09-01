@@ -1,9 +1,9 @@
-name: Flutter Application Check CI
+name: Flutter Application Check and Publish CI
 
 on: push
 
 jobs:
-  flutter-check:
+  flutter-check-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,5 +26,14 @@ jobs:
           dart format --output=none --set-exit-if-changed .
 
       - name: Check for code errors
-        run: |
-          flutter analyze
+        run: flutter analyze
+
+      - name: Build prod
+        run: flutter build web --release
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == "refs/heads/main"
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
