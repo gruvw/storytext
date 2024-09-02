@@ -43,4 +43,6 @@ flutter:
 
 # Command to generate the icons: `dart run flutter_launcher_icons`
 flutter_launcher_icons:
+  web:
+    generate: true
   image_path: assets/images/app_icon.png
