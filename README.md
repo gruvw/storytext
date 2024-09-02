@@ -29,19 +29,29 @@ The StoryText interactive book application currently supports the following feat
 
 You can check the "roadmap" for future features: [project board](https://github.com/users/gruvw/projects/4).
 
-### Example
+## Live Demo
 
 You can check out a live (very basic) example/demo showing off every feature of StoryText here: <https://storytext.gruvw.com/>.
-<!-- TODO application name and logo -->
 
 ## Usage
 
 To create you own story using this template you should follow the steps below:
 
-<!-- TODO 0 explain how to install/create a book repo -->
-- Change the application icon located in `./assets/images/app_icon.png`
+- Fork this repository <https://github.com/gruvw/storytext> (click on "Fork" on the GitHub web interface)
+- Change the content of the CNAME file located at `./web/CNAME` with you own [custom domain for GitHub pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)
+- Change the name of your story by changing the text inside double quotes (`"StoryText"`) in the file `./lib/static/values.dart`
+- Change the application icon located at `./assets/images/app_icon.png`
+- Write your own story using the YAML file located at `./assets/content/content.yaml` - it is prefiled with a basic example to explain the syntax of the file
+- Add personas profile pictures to the directory `./assets/images/personas/` before referencing them in the `content.yaml`
+- Add story messages pictures to the directory `./assets/images/story/` before referencing them in the `content.yaml`
+- The application will get built and deployed to GitHub pages every time new commits are pushed to the repository
 
-For more advanced customization you might need to know more about [Flutter](https://flutter.dev/) and modify the source code directly.
+Helpful resources:
+
+- YAML format: <https://yaml.org/spec/1.2.2/>
+- Markdown format: <https://www.markdownguide.org/getting-started/>
+
+For more advanced customization or deployment to other platforms, you might need to know more about [Flutter](https://flutter.dev/) and modify the source code directly.
 
 **Note** - You can always get updates with new features from this upstream repository by pressing the "Sync Fork" button on your fork.
 
