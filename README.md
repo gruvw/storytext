@@ -31,15 +31,19 @@ You can check the "roadmap" for future features: [project board](https://github.
 
 ### Example
 
-You can check out a live (very basic) example showing off every feature of StoryText here: <>.
-
-<!-- TODO live example -->
+You can check out a live (very basic) example/demo showing off every feature of StoryText here: <https://storytext.gruvw.com/>.
+<!-- TODO application name and logo -->
 
 ## Usage
 
 To create you own story using this template you should follow the steps below:
 
-<!-- TODO explain how to install/create a book repo -->
+<!-- TODO 0 explain how to install/create a book repo -->
+- Change the application icon located in `./assets/images/app_icon.png`
+
+For more advanced customization you might need to know more about [Flutter](https://flutter.dev/) and modify the source code directly.
+
+**Note** - You can always get updates with new features from this upstream repository by pressing the "Sync Fork" button on your fork.
 
 ## Written with StoryText
 

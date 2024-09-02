@@ -22,6 +22,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -35,6 +36,11 @@ flutter:
 
   assets:
     - assets/content/
+    - assets/images/
     - assets/images/personas/
     - assets/images/story/
     - assets/fonts/
+
+# Command to generate the icons: `dart run flutter_launcher_icons`
+flutter_launcher_icons:
+  image_path: assets/images/app_icon.png
