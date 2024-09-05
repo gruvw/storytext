@@ -35,7 +35,7 @@ You can check out a live (very basic) example/demo showing off every feature of 
 
 ## Usage
 
-To create you own story using this template you should follow the steps below:
+To create your own story using this template you should follow the steps below:
 
 - Fork this repository <https://github.com/gruvw/storytext> (click on "Fork" on the GitHub web interface)
 - Change the content of the CNAME file located at `./web/CNAME` with you own [custom domain for GitHub pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)
