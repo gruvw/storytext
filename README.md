@@ -38,7 +38,9 @@ You can check out a live (very basic) example/demo showing off every feature of 
 To create your own story using this template you should follow the steps below:
 
 - Fork this repository <https://github.com/gruvw/storytext> (click on "Fork" on the GitHub web interface)
+- Allow the GitHub action/workflow to run (from the _Actions_ tab on the forked repository)
 - Change the content of the CNAME file located at `./web/CNAME` with you own [custom domain for GitHub pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site)
+- Manually enable GitHub pages environnement to deploy from the `gh-pages` branch from the settings of the forked repository
 - Change the name of your story by changing the text inside double quotes (`"StoryText"`) in the file `./lib/static/values.dart`
 - Change the application icon located at `./assets/images/app_icon.png`
 - Write your own story using the YAML file located at `./assets/content/content.yaml` - it is prefiled with a basic example to explain the syntax of the file
